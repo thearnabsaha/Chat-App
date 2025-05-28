@@ -14,6 +14,8 @@ app.use(morgan(morganFormat));
 app.use(helmet());
 import { prisma } from '@workspace/db/client'
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
+import { jwtAuth } from './middlewares/jwtAuth';
 app.use(cors({
   origin: process.env.CORS_ORIGIN,
   credentials: true,
@@ -82,6 +84,7 @@ app.post('/signin', async (req, res) => {
       res.send(result.error.format());
     } else {
       const user = await prisma.user.findFirst({ where: { username: req.body.username } })
+      var token = jwt.sign({id:user?.id},JWT_SECRET, { expiresIn: "1h" })
       if (!user) {
         res.status(404).json({ message: "User Doesn't Exists!" })
         return;
@@ -90,7 +93,7 @@ app.post('/signin', async (req, res) => {
       if (!isCompared) {
         res.status(401).json({ message: "Invalid Credentials!" });
       } else {
-        res.status(200).json(result);
+        res.status(200).json({token});
       }
     }
   } catch (error) {
@@ -98,7 +101,7 @@ app.post('/signin', async (req, res) => {
     console.log(error)
   }
 });
-app.get('/user', async (req, res) => {
+app.get('/user', jwtAuth,async (req, res) => {
   const result = SigninSchema.safeParse(req.body);
   try {
     if (!result.success) {
