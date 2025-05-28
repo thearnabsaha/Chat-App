@@ -13,10 +13,9 @@ declare global {
 export const jwtAuth = (req: Request, res: Response, next: NextFunction) => {
   try {
     const decoded = jwt.verify(
-      req.headers.token as string,
+      req.headers["authorization"] as string,
       JWT_SECRET as string
     ) as { id: string };
-
     if (decoded.id) {
       req.id = decoded.id;
       next();
