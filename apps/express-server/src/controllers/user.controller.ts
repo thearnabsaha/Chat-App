@@ -5,6 +5,14 @@ import bcrypt from 'bcrypt'
 import { JWT_SECRET } from '@workspace/backend-common/config';
 import jwt from 'jsonwebtoken'
 
+export const Server = async (req: Request, res: Response) => {
+    try {
+        res.send('hello from simple server :)');
+    } catch (error) {
+        console.log(error)
+        res.status(500).send(error)
+    }
+}
 export const UserSignUp = async (req: Request, res: Response) => {
     try {
         const result = SignupSchema.safeParse(req.body);
