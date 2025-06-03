@@ -4,6 +4,6 @@ import { CreateRoom } from "../controllers/room.controller";
 
 const router = Router();
 
-router.get("/create", jwtAuth, CreateRoom);
+router.post("/create", jwtAuth, CreateRoom);
 
 export default router;
