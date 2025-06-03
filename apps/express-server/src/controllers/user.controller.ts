@@ -35,6 +35,8 @@ export const UserSignUp = async (req: Request, res: Response) => {
             await prisma.user.create({
                 data: {
                     username: req.body.username,
+                    name: req.body.name,
+                    photo: req.body.photo,
                     email: req.body.email,
                     password: hashedPassword,
                 }
@@ -94,6 +96,14 @@ export const HealthCheck = async (req: Request, res: Response) => {
             responseTime: `${Date.now() - start}ms`,
         };
         res.status(200).json(healthcheck);
+    } catch (error) {
+        console.log(error)
+        res.status(500).send(error)
+    }
+}
+export const CreateRoom = async (req: Request, res: Response) => {
+    try {
+
     } catch (error) {
         console.log(error)
         res.status(500).send(error)
