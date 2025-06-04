@@ -83,8 +83,12 @@ export const deleteChat = async (req: Request, res: Response) => {
             res.status(400).json({message:"Room is not Valid!"})
             return;
         }
-        const allchats=await prisma.chat.findMany({where:{}})
-        res.status(200).json({allchats})
+        await prisma.chat.delete({
+            where: {
+                id: Number(req.params.id),
+            },
+        });
+        res.status(200).json({message:"Message is Deleted!"})
     } catch (error) {
         console.log(error)
         res.status(500).json({error})
