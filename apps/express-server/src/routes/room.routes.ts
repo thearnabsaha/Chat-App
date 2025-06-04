@@ -4,7 +4,7 @@ import { CreateRoom, deleteRoom, deleteRooms, FindRoom, FindRooms, UpdateRoom } 
 
 const router = Router();
 
-router.post("/create", jwtAuth, CreateRoom);
+router.post("/", jwtAuth, CreateRoom);
 router.get("/", jwtAuth, FindRooms);
 router.get("/:id", jwtAuth, FindRoom);
 router.put("/:id", jwtAuth, UpdateRoom);
