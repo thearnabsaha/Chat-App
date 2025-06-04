@@ -27,12 +27,12 @@ export const CreateRoom = async (req: Request, res: Response) => {
 }
 export const FindRooms = async (req: Request, res: Response) => {
     try {
-        const user = await prisma.user.findFirst({ where: { username: req.body.username } })
+        const user = await prisma.user.findFirst({ where: { id: req.id } })
         if (!user) {
             res.status(400).json({ message: "User is not Valid!" })
             return;
         }
-        const room = await prisma.room.findMany({ where: { slug: req.body.slug } })
+        const room = await prisma.room.findMany({ where: { adminId:user.id } })
         if (!room) {
             res.status(404).json({ message: "No Such room Exists" })
             return;
