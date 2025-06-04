@@ -69,6 +69,8 @@ export const updateChat = async (req: Request, res: Response) => {
         res.status(500).json({error})
     }
 }
+
+//have to do deletechat and deletecallchats
 export const deleteChat = async (req: Request, res: Response) => {
     try {
         const user=await prisma.user.findFirst({where:{id:req.id}})
