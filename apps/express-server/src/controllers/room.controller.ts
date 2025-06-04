@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 
 export const CreateRoom = async (req: Request, res: Response) => {
     try {
-        const user = await prisma.user.findFirst({ where: { username: req.body.username } })
+        const user = await prisma.user.findFirst({ where: { id: req.id } })
         if (!user) {
             res.status(400).json({ message: "User is not Valid!" })
             return;
@@ -45,7 +45,7 @@ export const FindRooms = async (req: Request, res: Response) => {
 }
 export const FindRoom = async (req: Request, res: Response) => {
     try {
-        const user = await prisma.user.findFirst({ where: { username: req.body.username } })
+        const user = await prisma.user.findFirst({ where: { id: req.id } })
         if (!user) {
             res.status(400).json({ message: "User is not Valid!" })
             return;
@@ -63,7 +63,7 @@ export const FindRoom = async (req: Request, res: Response) => {
 }
 export const UpdateRoom = async (req: Request, res: Response) => {
     try {
-        const user = await prisma.user.findFirst({ where: { username: req.body.username } })
+        const user = await prisma.user.findFirst({ where: { id: req.id } })
         if (!user) {
             res.status(400).json({ message: "User is not Valid!" })
             return;
@@ -75,7 +75,7 @@ export const UpdateRoom = async (req: Request, res: Response) => {
         }
         await prisma.room.update({
             where: {
-                id: Number(req.params.id),
+                slug: req.params.id,
             },
             data: {
                 slug: req.body.slug
@@ -89,7 +89,7 @@ export const UpdateRoom = async (req: Request, res: Response) => {
 }
 export const deleteRoom = async (req: Request, res: Response) => {
     try {
-        const user = await prisma.user.findFirst({ where: { username: req.body.username } })
+        const user = await prisma.user.findFirst({ where: { id: req.id } })
         if (!user) {
             res.status(400).json({ message: "User is not Valid!" })
             return;
@@ -101,7 +101,7 @@ export const deleteRoom = async (req: Request, res: Response) => {
         }
         await prisma.room.delete({
             where: {
-                id: Number(req.params.id),
+                slug: req.params.id,
             },
         });
 
@@ -113,7 +113,7 @@ export const deleteRoom = async (req: Request, res: Response) => {
 }
 export const deleteRooms = async (req: Request, res: Response) => {
     try {
-        const user = await prisma.user.findFirst({ where: { username: req.body.username } })
+        const user = await prisma.user.findFirst({ where: { id: req.id } })
         if (!user) {
             res.status(400).json({ message: "User is not Valid!" })
             return;
