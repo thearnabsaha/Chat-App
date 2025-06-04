@@ -50,7 +50,7 @@ export const FindRoom = async (req: Request, res: Response) => {
             res.status(400).json({ message: "User is not Valid!" })
             return;
         }
-        const room = await prisma.room.findFirst({ where: { id: Number(req.params.id) } })
+        const room = await prisma.room.findFirst({ where: { slug:req.params.id } })
         if (!room) {
             res.status(404).json({ message: "No Such Room Exists" })
             return;
@@ -68,12 +68,12 @@ export const UpdateRoom = async (req: Request, res: Response) => {
             res.status(400).json({ message: "User is not Valid!" })
             return;
         }
-        const room = await prisma.room.findFirst({ where: { id: Number(req.params.id) } })
+        const room = await prisma.room.findFirst({ where: { slug:req.params.id } })
         if (!room) {
             res.status(404).json({ message: "No Such Room Exists" })
             return;
         }
-        const updatedRoom = await prisma.room.update({
+        await prisma.room.update({
             where: {
                 id: Number(req.params.id),
             },
@@ -94,7 +94,7 @@ export const deleteRoom = async (req: Request, res: Response) => {
             res.status(400).json({ message: "User is not Valid!" })
             return;
         }
-        const room = await prisma.room.findFirst({ where: { id: Number(req.params.id) } })
+        const room = await prisma.room.findFirst({ where: { slug:req.params.id } })
         if (!room) {
             res.status(404).json({ message: "No Such Room Exists" })
             return;
