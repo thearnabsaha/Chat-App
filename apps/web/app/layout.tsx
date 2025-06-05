@@ -24,8 +24,11 @@ export default function RootLayout({
       <body
         className={`${fontSans.variable} ${fontMono.variable} font-sans antialiased `}
       >
-        <Navbar/>
-        <Providers>{children}</Providers>
+        
+        <Providers>
+          <Navbar/>
+          {children}
+          </Providers>
       </body>
     </html>
   )
