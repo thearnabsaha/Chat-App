@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react"
 interface MessageType {
     msg: string,
     timestamps: string,
-    from: "Server" | "You"
+    from: string
 }
 const useWebSocket = (url: string) => {
     const wsRef = useRef<WebSocket | null>(null)
