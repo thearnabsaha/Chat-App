@@ -84,6 +84,9 @@ importers:
 
   apps/web:
     dependencies:
+      '@hookform/resolvers':
+        specifier: ^5.0.1
+        version: 5.0.1(react-hook-form@7.57.0(react@19.1.0))
       '@workspace/ui':
         specifier: workspace:*
         version: link:../../packages/ui
@@ -124,6 +127,9 @@ importers:
       '@workspace/typescript-config':
         specifier: workspace:*
         version: link:../../packages/typescript-config
+      react-hook-form:
+        specifier: ^7.56.4
+        version: 7.57.0(react@19.1.0)
       typescript:
         specifier: ^5.8.3
         version: 5.8.3
