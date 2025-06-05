@@ -31,7 +31,7 @@ export const AllChats = async (req: Request, res: Response) => {
             res.status(400).json({message:"User is not Valid!"})
             return;
         }
-        const room=await prisma.room.findFirst({where:{slug:req.body.slug}})
+        const room=await prisma.room.findFirst({where:{}})
         if(!room){
             res.status(400).json({message:"Room is not Valid!"})
             return;
@@ -70,7 +70,26 @@ export const updateChat = async (req: Request, res: Response) => {
     }
 }
 
-//have to do deletechat and deletecallchats
+export const RoomChats = async (req: Request, res: Response) => {
+    try {
+        const user=await prisma.user.findFirst({where:{id:req.id}})
+        if(!user){
+            res.status(400).json({message:"User is not Valid!"})
+            return;
+        }
+        const room=await prisma.room.findFirst({where:{slug:req.params.id}})
+        if(!room){
+            res.status(400).json({message:"Room is not Valid!"})
+            return;
+        }
+        const allchats=await prisma.chat.findMany({where:{roomId:room.id}})
+        res.status(200).json({allchats})
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({error})
+    }
+}
+//TODO:
 export const deleteChat = async (req: Request, res: Response) => {
     try {
         const user=await prisma.user.findFirst({where:{id:req.id}})
@@ -78,7 +97,7 @@ export const deleteChat = async (req: Request, res: Response) => {
             res.status(400).json({message:"User is not Valid!"})
             return;
         }
-        const room=await prisma.room.findFirst({where:{slug:req.body.slug}})
+        const room=await prisma.room.findFirst({where:{}})
         if(!room){
             res.status(400).json({message:"Room is not Valid!"})
             return;
@@ -94,19 +113,43 @@ export const deleteChat = async (req: Request, res: Response) => {
         res.status(500).json({error})
     }
 }
-export const deleteChats = async (req: Request, res: Response) => {
+//TODO:
+export const deleteRoomChat = async (req: Request, res: Response) => {
     try {
         const user=await prisma.user.findFirst({where:{id:req.id}})
         if(!user){
             res.status(400).json({message:"User is not Valid!"})
             return;
         }
-        const room=await prisma.room.findFirst({where:{slug:req.body.slug}})
+        const room=await prisma.room.findFirst({where:{}})
         if(!room){
             res.status(400).json({message:"Room is not Valid!"})
             return;
         }
-        const allchats=await prisma.chat.findMany({where:{}})
+        await prisma.chat.delete({
+            where: {
+                id: Number(req.params.id),
+            },
+        });
+        res.status(200).json({message:"Message is Deleted!"})
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({error})
+    }
+}
+export const deleteAllChats = async (req: Request, res: Response) => {
+    try {
+        const user=await prisma.user.findFirst({where:{id:req.id}})
+        if(!user){
+            res.status(400).json({message:"User is not Valid!"})
+            return;
+        }
+        const room=await prisma.room.findFirst({where:{}})
+        if(!room){
+            res.status(400).json({message:"Room is not Valid!"})
+            return;
+        }
+        const allchats=await prisma.chat.deleteMany({where:{}})
         res.status(200).json({allchats})
     } catch (error) {
         console.log(error)
