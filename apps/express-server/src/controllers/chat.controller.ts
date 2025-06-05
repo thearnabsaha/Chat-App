@@ -69,7 +69,6 @@ export const updateChat = async (req: Request, res: Response) => {
         res.status(500).json({error})
     }
 }
-
 export const RoomChats = async (req: Request, res: Response) => {
     try {
         const user=await prisma.user.findFirst({where:{id:req.id}})
@@ -89,7 +88,6 @@ export const RoomChats = async (req: Request, res: Response) => {
         res.status(500).json({error})
     }
 }
-//TODO:
 export const deleteChat = async (req: Request, res: Response) => {
     try {
         const user=await prisma.user.findFirst({where:{id:req.id}})
@@ -113,7 +111,6 @@ export const deleteChat = async (req: Request, res: Response) => {
         res.status(500).json({error})
     }
 }
-//TODO:
 export const deleteRoomChat = async (req: Request, res: Response) => {
     try {
         const user=await prisma.user.findFirst({where:{id:req.id}})
@@ -121,17 +118,13 @@ export const deleteRoomChat = async (req: Request, res: Response) => {
             res.status(400).json({message:"User is not Valid!"})
             return;
         }
-        const room=await prisma.room.findFirst({where:{}})
+        const room=await prisma.room.findFirst({where:{slug:req.params.id}})
         if(!room){
             res.status(400).json({message:"Room is not Valid!"})
             return;
         }
-        await prisma.chat.delete({
-            where: {
-                id: Number(req.params.id),
-            },
-        });
-        res.status(200).json({message:"Message is Deleted!"})
+        const allchats=await prisma.chat.deleteMany({where:{roomId:room.id}})
+        res.status(200).json({allchats})
     } catch (error) {
         console.log(error)
         res.status(500).json({error})
