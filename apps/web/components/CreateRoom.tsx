@@ -29,7 +29,7 @@ const CreateRoom = () => {
         <div className="w-[60vw] h-[54vh] rounded-lg mb-[1vh] bg-accent flex justify-center items-center">
             <div className="rounded-xl flex flex-col w-[600px] p-16 bg-card">
                 <h1 className="text-3xl font-bold pb-1">Real Time Chat</h1>
-                <p className=" font-bold text-ring pb-5">Make a Temporary Room that will be expired</p>
+                <p className=" font-bold text-ring pb-5">Make a Room that will be expired</p>
                 <div className="flex">
                     <Input className="border border-ring mb-4" placeholder="Room No." />
                     <Button className="ml-4 text-md font-bold">Join Room</Button>
