@@ -23,7 +23,7 @@ const CreateRoom = () => {
     const [toggle, setToggle] = useState(false)
     const [open, setOpen] = useState(false)
     const [RoomString, setRoomString] = useState("")
-    const { setRoom,room } = useRoomStore()
+    const { setRoom } = useRoomStore()
     const copyHandler = () => {
         setToggle(true)
         navigator.clipboard.writeText(RoomString)
@@ -45,7 +45,7 @@ const CreateRoom = () => {
         randomStringGenerator()
         setOpen(true)
     }
-    const form = useForm<z.infer<typeof roomInputSchema>>({
+    const RoomInputForm = useForm<z.infer<typeof roomInputSchema>>({
         resolver: zodResolver(roomInputSchema),
         defaultValues: {
             roomId: "",
@@ -61,10 +61,10 @@ const CreateRoom = () => {
             <div className="rounded-xl flex flex-col w-[600px] p-16 bg-card">
                 <h1 className="text-3xl font-bold pb-1">Real Time Chat</h1>
                 <p className=" font-bold text-ring pb-5">Make a Room by just clicking a Button</p>
-                    <Form {...form}>
-                        <form onSubmit={form.handleSubmit(onSubmit)} className=" space-y-4 flex w-full">
+                    <Form {...RoomInputForm}>
+                        <form onSubmit={RoomInputForm.handleSubmit(onSubmit)} className=" space-y-4 flex w-full">
                             <FormField
-                                control={form.control}
+                                control={RoomInputForm.control}
                                 name="roomId"
                                 render={({ field }) => (
                                     <FormItem>

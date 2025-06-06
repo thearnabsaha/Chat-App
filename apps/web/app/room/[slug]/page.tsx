@@ -14,14 +14,13 @@ import {
     FormItem,
     FormMessage,
 } from "@workspace/ui/components/form"
-
 const inputSchema = z.object({
     msg: z.string().min(1),
 })
 const Room = () => {
     const router = useRouter();
     const { room } = useRoomStore()
-    const form = useForm<z.infer<typeof inputSchema>>({
+    const InputForm = useForm<z.infer<typeof inputSchema>>({
         resolver: zodResolver(inputSchema),
         defaultValues: {
             msg: "",
@@ -30,6 +29,7 @@ const Room = () => {
 
     function onSubmit(values: z.infer<typeof inputSchema>) {
         console.log(values)
+        InputForm.reset()
     }
     useEffect(() => {
         if (!room) {
@@ -60,10 +60,10 @@ const Room = () => {
                     <p className=" py-2 px-5 rounded-lg mx-5 my-1 bg-primary text-secondary max-w-96">My msgs</p>
                 </div>
                 <div className="flex">
-                    <Form {...form}>
-                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 flex w-full justify-between">
+                    <Form {...InputForm}>
+                        <form onSubmit={InputForm.handleSubmit(onSubmit)} className="space-y-8 flex w-full justify-between">
                             <FormField
-                                control={form.control}
+                                control={InputForm.control}
                                 name="msg"
                                 render={({ field }) => (
                                     <FormItem>

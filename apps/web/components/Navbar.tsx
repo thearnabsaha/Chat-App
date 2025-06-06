@@ -1,5 +1,6 @@
 "use client"
 import { Button } from "@workspace/ui/components/button"
+import axios from "axios"
 import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
 
@@ -9,6 +10,7 @@ const Navbar = () => {
     useEffect(() => {
         const theme = localStorage.getItem("theme")
         setToggle(theme == "light" ? false : true)
+        // axios.get("/me")
     }, [])
 
     const lightThemeHandler = () => {
