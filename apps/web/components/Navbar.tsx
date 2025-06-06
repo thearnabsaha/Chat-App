@@ -1,5 +1,4 @@
 "use client"
-import { useRoomStore } from "@/lib/store/roomStore"
 import { Button } from "@workspace/ui/components/button"
 import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
@@ -7,7 +6,6 @@ import { useEffect, useState } from "react"
 const Navbar = () => {
     const { setTheme } = useTheme()
     const [toggle, setToggle] = useState<Boolean | null>(null)
-    const {room}=useRoomStore()
     useEffect(() => {
         const theme = localStorage.getItem("theme")
         setToggle(theme == "light" ? false : true)
@@ -29,7 +27,6 @@ const Navbar = () => {
                     <li className="px-5">Profile</li>
                     <li className="px-5">Dashboard</li>
                     <li className="px-5">Chat</li>
-                    <li className="px-5">{room?.RoomId||"ROOM ID"}</li>
                     {
                         toggle ? <Button className="px-5" onClick={lightThemeHandler}>Light Mode</Button> :
                             <Button className="px-5" onClick={darkThemeHandler}>Dark Mode</Button>

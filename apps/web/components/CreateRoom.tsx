@@ -4,11 +4,26 @@ import { Button } from "@workspace/ui/components/button"
 import { Input } from "@workspace/ui/components/input"
 import { useState } from "react";
 import { GoCopy, GoCheck } from "react-icons/go";
+import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { useRouter } from 'next/navigation';
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormMessage,
+} from "@workspace/ui/components/form"
+const roomInputSchema = z.object({
+    roomId: z.string().min(6).max(6),
+})
 const CreateRoom = () => {
+    const router = useRouter();
     const [toggle, setToggle] = useState(false)
     const [open, setOpen] = useState(false)
     const [RoomString, setRoomString] = useState("")
-    const { setRoom }=useRoomStore()
+    const { setRoom,room } = useRoomStore()
     const copyHandler = () => {
         setToggle(true)
         navigator.clipboard.writeText(RoomString)
@@ -16,31 +31,55 @@ const CreateRoom = () => {
             setToggle(false)
         }, 800);
     }
-    const randomStringGenerator=()=>{
-        const values="QWERTYUIOPASDFGHJKLZXCVBNM1234567890"
-        let roomString=""
+    const randomStringGenerator = () => {
+        const values = "QWERTYUIOPASDFGHJKLZXCVBNM1234567890"
+        let roomString = ""
         for (let i = 0; i < 6; i++) {
-            const x=Math.floor(Math.random()*36)
-            roomString+=values[x]
+            const x = Math.floor(Math.random() * 36)
+            roomString += values[x]
         }
         setRoomString(roomString)
-        setRoom({RoomId:roomString})
+        setRoom({ RoomId: roomString })
     }
-    const createHandler=()=>{
+    const createHandler = () => {
         randomStringGenerator()
         setOpen(true)
+    }
+    const form = useForm<z.infer<typeof roomInputSchema>>({
+        resolver: zodResolver(roomInputSchema),
+        defaultValues: {
+            roomId: "",
+        },
+    })
+    function onSubmit(values: z.infer<typeof roomInputSchema>) {
+        console.log(values)
+        setRoom({ RoomId: values.roomId })
+        router.push(`/room/${values.roomId}`)
     }
     return (
         <div className="w-[60vw] h-[54vh] rounded-lg mb-[1vh] bg-accent flex justify-center items-center">
             <div className="rounded-xl flex flex-col w-[600px] p-16 bg-card">
                 <h1 className="text-3xl font-bold pb-1">Real Time Chat</h1>
-                <p className=" font-bold text-ring pb-5">Make a Room that will be expired</p>
-                <div className="flex">
-                    <Input className="border border-ring mb-4" placeholder="Room No." />
-                    <Button className="ml-4 text-md font-bold">Join Room</Button>
-                </div>
+                <p className=" font-bold text-ring pb-5">Make a Room by just clicking a Button</p>
+                    <Form {...form}>
+                        <form onSubmit={form.handleSubmit(onSubmit)} className=" space-y-4 flex w-full">
+                            <FormField
+                                control={form.control}
+                                name="roomId"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormControl>
+                                            <Input placeholder="Room No." {...field} className="border border-ring w-84"/>
+                                        </FormControl>
+                                        <FormMessage className="text-xs mt-2"/>
+                                    </FormItem>
+                                )}
+                            />
+                            <Button type="submit" className="ml-4 text-md font-bold">Join Room</Button>
+                        </form>
+                    </Form>
                 <Button className="font-bold text-md py-3" onClick={createHandler}>Create a New Room</Button>
-                {open&&<div className="flex flex-col items-center mt-5 bg-accent p-5 rounded-lg">
+                {open && <div className="flex flex-col items-center mt-5 bg-accent p-5 rounded-lg">
                     <p>Share this code with your friend</p>
                     <div className="flex items-center justify-center">
                         <h1 className="text-3xl font-black pt-3">{RoomString}</h1>

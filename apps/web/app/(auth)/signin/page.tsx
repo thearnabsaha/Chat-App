@@ -33,7 +33,6 @@ const Signin = () => {
         },
     })
     function onSubmit(values: z.infer<typeof SigninSchema>) {
-        console.log(values)
         router.push('/dashboard')
         SigninForm.reset()
     }
