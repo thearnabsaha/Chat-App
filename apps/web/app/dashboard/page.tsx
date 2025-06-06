@@ -2,19 +2,23 @@
 import CreateRoom from "@/components/CreateRoom";
 import Profile from "@/components/Profile";
 import { BACKEND_URL } from "@/lib/config";
+import { useUserStore } from "@/lib/store/userStore";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 const Dashboard = () => {
     const router=useRouter()
+    const { setUser } = useUserStore()
     useEffect(() => {
         const token=localStorage.getItem("token")
         if(!token){
             router.push("/signin")
         }
         axios.get(`${BACKEND_URL}/me`,{headers:{Authorization:token}})
-        .then((e)=>console.log(e))
+        .then((e)=>{
+            setUser(e.data.message)
+        })
         .catch((e)=>console.log(e))
     }, [router])
     return (

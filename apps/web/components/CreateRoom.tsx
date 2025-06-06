@@ -15,6 +15,8 @@ import {
     FormItem,
     FormMessage,
 } from "@workspace/ui/components/form"
+import { useUserStore } from "@/lib/store/userStore";
+import { Skeleton } from "@workspace/ui/components/skeleton";
 const roomInputSchema = z.object({
     roomId: z.string().min(6).max(6),
 })
@@ -24,6 +26,7 @@ const CreateRoom = () => {
     const [open, setOpen] = useState(false)
     const [RoomString, setRoomString] = useState("")
     const { setRoom } = useRoomStore()
+    const { user } = useUserStore()
     const copyHandler = () => {
         setToggle(true)
         navigator.clipboard.writeText(RoomString)
@@ -58,7 +61,7 @@ const CreateRoom = () => {
     }
     return (
         <div className="w-[60vw] h-[54vh] rounded-lg bg-accent flex justify-center items-center">
-            <div className="rounded-xl flex flex-col w-[600px] p-16 bg-card">
+            {user?<div className="rounded-xl flex flex-col w-[600px] p-16 bg-card">
                 <h1 className="text-3xl font-bold pb-1">Real Time Chat</h1>
                 <p className=" font-bold text-ring pb-5">Make a Room by just clicking a Button</p>
                     <Form {...RoomInputForm}>
@@ -92,7 +95,7 @@ const CreateRoom = () => {
                         </div>
                     </div>
                 </div>}
-            </div>
+            </div>:<Skeleton className="bg-ring rounded-xl w-[600px] h-60" />}
         </div>
     )
 }

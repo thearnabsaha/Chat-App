@@ -10,12 +10,12 @@ interface User {
 
 interface UserState {
     user: User | null;
-    setRoom: (user: User) => void;
-    clearRoom: () => void;
+    setUser: (user: User) => void;
+    clearUser: () => void;
 }
 
-export const useRoomStore = create<UserState>((set) => ({
+export const useUserStore = create<UserState>((set) => ({
     user: null,
-    setRoom: (user) => set({ user }),
-    clearRoom: () => set({ user: null }),
+    setUser: (user) => set({ user }),
+    clearUser: () => set({ user: null }),
 }));
