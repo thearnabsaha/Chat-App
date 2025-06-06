@@ -57,7 +57,7 @@ const CreateRoom = () => {
         router.push(`/room/${values.roomId}`)
     }
     return (
-        <div className="w-[60vw] h-[54vh] rounded-lg mb-[1vh] bg-accent flex justify-center items-center">
+        <div className="w-[60vw] h-[54vh] rounded-lg bg-accent flex justify-center items-center">
             <div className="rounded-xl flex flex-col w-[600px] p-16 bg-card">
                 <h1 className="text-3xl font-bold pb-1">Real Time Chat</h1>
                 <p className=" font-bold text-ring pb-5">Make a Room by just clicking a Button</p>

@@ -1,5 +1,6 @@
 "use client"
 import CreateRoom from "@/components/CreateRoom";
+import Profile from "@/components/Profile";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -17,10 +18,8 @@ const Dashboard = () => {
                 <h1>A</h1>
             </div>
             <div className=" flex flex-col mx-[1vh] rounded-lg font-mono">
+                <Profile/>
                 <CreateRoom />
-                <div className="w-[60vw] h-[30vh] rounded-lg mt-[1vh] bg-accent">
-                    <h1>C</h1>
-                </div>
             </div>
         </div>
     )
