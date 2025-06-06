@@ -54,7 +54,7 @@ const Navbar = () => {
         setTheme("dark")
         setToggle(true)
     }
-    const logoutHandler=()=>{
+    const logoutHandler = () => {
         localStorage.removeItem("token")
         localStorage.removeItem("roomId")
         router.push("/signin")
@@ -64,10 +64,8 @@ const Navbar = () => {
             <h1 className="text-3xl pl-10">Chaty</h1>
             <div>
                 <ul className="flex pr-10 items-center">
-                    <li className="px-5">Profile</li>
-                    <Link className="px-5 cursor-pointer hover:underline" href={"/dashboard"}>Dashboard</Link>
-                    <li className="px-5 hover:underline cursor-pointer" onClick={logoutHandler}>Logout</li>
-                    <li className="px-5">Chat</li>
+                    <Link className="pr-5 cursor-pointer hover:underline" href={"/dashboard"}>Dashboard</Link>
+                    <li className="pr-5 hover:underline cursor-pointer" onClick={logoutHandler}>Logout</li>
                     {
                         toggle ? <Button className="px-5" onClick={lightThemeHandler}>Light Mode</Button> :
                             <Button className="px-5" onClick={darkThemeHandler}>Dark Mode</Button>
