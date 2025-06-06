@@ -1,4 +1,5 @@
 "use client"
+import { useRoomStore } from "@/lib/store/roomStore";
 import { Button } from "@workspace/ui/components/button"
 import { Input } from "@workspace/ui/components/input"
 import { useState } from "react";
@@ -7,6 +8,7 @@ const CreateRoom = () => {
     const [toggle, setToggle] = useState(false)
     const [open, setOpen] = useState(false)
     const [RoomString, setRoomString] = useState("")
+    const { setRoom }=useRoomStore()
     const copyHandler = () => {
         setToggle(true)
         navigator.clipboard.writeText(RoomString)
@@ -22,6 +24,7 @@ const CreateRoom = () => {
             roomString+=values[x]
         }
         setRoomString(roomString)
+        setRoom({RoomId:roomString})
     }
     const createHandler=()=>{
         randomStringGenerator()
