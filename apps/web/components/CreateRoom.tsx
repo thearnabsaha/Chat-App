@@ -17,6 +17,9 @@ import {
 } from "@workspace/ui/components/form"
 import { useUserStore } from "@/lib/store/userStore";
 import { Skeleton } from "@workspace/ui/components/skeleton";
+import axios from "axios";
+import { BACKEND_URL } from "@/lib/config";
+import toast, { Toaster } from "react-hot-toast";
 const roomInputSchema = z.object({
     roomId: z.string().min(6).max(6),
 })
@@ -55,32 +58,55 @@ const CreateRoom = () => {
         },
     })
     function onSubmit(values: z.infer<typeof roomInputSchema>) {
-        console.log(values)
-        setRoom({ RoomId: values.roomId })
-        router.push(`/room/${values.roomId}`)
+        const token = localStorage.getItem("token")
+        axios.get(`${BACKEND_URL}/room/${values.roomId}`, { headers: { Authorization: token } })
+            .then((e) => {
+                // setUser(e.data.message)
+                console.log(e.status)
+            })
+            .catch((e) => {
+                if (e.status) {
+                    axios.post(`${BACKEND_URL}/room`, { slug: values.roomId }, { headers: { Authorization: token } })
+                        .then((e) => {
+                            console.log(e)
+                        })
+                        .then(() => {
+                            router.push(`/room/${values.roomId}`)
+                        })
+                        .catch((e) => {
+                            toast.error(e.response.data.message)
+                            console.log(e)
+                        })
+                }
+            })
+
     }
     return (
         <div className="w-[60vw] h-[54vh] rounded-lg bg-accent flex justify-center items-center">
-            {user?<div className="rounded-xl flex flex-col w-[600px] p-16 bg-card">
+            <Toaster
+                position="top-right"
+                reverseOrder={false}
+            />
+            {user ? <div className="rounded-xl flex flex-col w-[600px] p-16 bg-card">
                 <h1 className="text-3xl font-bold pb-1">Real Time Chat</h1>
                 <p className=" font-bold text-ring pb-5">Make a Room by just clicking a Button</p>
-                    <Form {...RoomInputForm}>
-                        <form onSubmit={RoomInputForm.handleSubmit(onSubmit)} className=" space-y-4 flex w-full">
-                            <FormField
-                                control={RoomInputForm.control}
-                                name="roomId"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormControl>
-                                            <Input placeholder="Room No." {...field} className="border border-ring w-84"/>
-                                        </FormControl>
-                                        <FormMessage className="text-xs mt-2"/>
-                                    </FormItem>
-                                )}
-                            />
-                            <Button type="submit" className="ml-4 text-md font-bold">Join Room</Button>
-                        </form>
-                    </Form>
+                <Form {...RoomInputForm}>
+                    <form onSubmit={RoomInputForm.handleSubmit(onSubmit)} className=" space-y-4 flex w-full">
+                        <FormField
+                            control={RoomInputForm.control}
+                            name="roomId"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormControl>
+                                        <Input placeholder="Room No." {...field} className="border border-ring w-84" />
+                                    </FormControl>
+                                    <FormMessage className="text-xs mt-2" />
+                                </FormItem>
+                            )}
+                        />
+                        <Button type="submit" className="ml-4 text-md font-bold">Join Room</Button>
+                    </form>
+                </Form>
                 <Button className="font-bold text-md py-3" onClick={createHandler}>Create a New Room</Button>
                 {open && <div className="flex flex-col items-center mt-5 bg-accent p-5 rounded-lg">
                     <p>Share this code with your friend</p>
@@ -95,7 +121,7 @@ const CreateRoom = () => {
                         </div>
                     </div>
                 </div>}
-            </div>:<Skeleton className="bg-ring rounded-xl w-[600px] h-60" />}
+            </div> : <Skeleton className="bg-ring rounded-xl w-[600px] h-60" />}
         </div>
     )
 }
