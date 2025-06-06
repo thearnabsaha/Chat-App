@@ -1,5 +1,6 @@
 "use client"
 import { BACKEND_URL } from "@/lib/config"
+import { useRoomStore } from "@/lib/store/roomStore"
 import { useUserStore } from "@/lib/store/userStore"
 import { Button } from "@workspace/ui/components/button"
 import axios from "axios"
@@ -12,10 +13,15 @@ const Navbar = () => {
     const { setUser } = useUserStore()
     const { setTheme } = useTheme()
     const [toggle, setToggle] = useState<Boolean | null>(null)
+
     useEffect(() => {
         const token = localStorage.getItem("token")
+        const roomId = localStorage.getItem("roomId")
         if (!token) {
             router.push("/signin")
+        }
+        if(!roomId){
+            router.push("/dashboard")
         }
         const theme = localStorage.getItem("theme")
         setToggle(theme == "light" ? false : true)
@@ -24,7 +30,14 @@ const Navbar = () => {
                 setUser(e.data.message)
             })
             .catch((e) => console.log(e))
-    }, [])
+
+        axios.get(`${BACKEND_URL}/room/${roomId}`, { headers: { Authorization: token } })
+            .then((e) => {
+                // setUser(e.data.message)
+                console.log(e)
+            })
+            .catch((e) => console.log(e))
+    }, [router])
 
     const lightThemeHandler = () => {
         setTheme("light")

@@ -61,14 +61,18 @@ const CreateRoom = () => {
         const token = localStorage.getItem("token")
         axios.get(`${BACKEND_URL}/room/${values.roomId}`, { headers: { Authorization: token } })
             .then((e) => {
-                // setUser(e.data.message)
                 console.log(e.status)
+                localStorage.setItem("roomId", values.roomId)
+            })
+            .then(() => {
+                router.push(`/room/${values.roomId}`)
             })
             .catch((e) => {
                 if (e.status) {
                     axios.post(`${BACKEND_URL}/room`, { slug: values.roomId }, { headers: { Authorization: token } })
                         .then((e) => {
                             console.log(e)
+                            localStorage.setItem("roomId", values.roomId)
                         })
                         .then(() => {
                             router.push(`/room/${values.roomId}`)

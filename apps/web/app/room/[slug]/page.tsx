@@ -2,8 +2,8 @@
 import { useRoomStore } from "@/lib/store/roomStore"
 import { Button } from "@workspace/ui/components/button"
 import { Input } from "@workspace/ui/components/input"
-import { useEffect } from "react"
-import { useRouter } from 'next/navigation';
+import { useEffect, useState } from "react"
+import { useParams, useRouter } from 'next/navigation';
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -23,6 +23,7 @@ const Room = () => {
     const router = useRouter();
     const { room } = useRoomStore()
     const { user } = useUserStore()
+    const [roomId, setroomId] = useState<string|null>("")
     const InputForm = useForm<z.infer<typeof inputSchema>>({
         resolver: zodResolver(inputSchema),
         defaultValues: {
@@ -34,10 +35,17 @@ const Room = () => {
         console.log(values)
         InputForm.reset()
     }
+    const params=useParams()
     useEffect(() => {
-        // if (!room) {
-        //     router.push(`/dashboard`)
-        // }
+        const roomid = localStorage.getItem("roomId")
+        setroomId(roomid)
+        if (!roomid) {
+            router.push(`/dashboard`)
+        }
+        console.log(params.slug)
+        if (roomid!=params.slug) {
+            router.push(`/dashboard`)
+        }
     }, [])
     return (
         <div className="flex justify-center mt-10 font-mono">
@@ -47,7 +55,7 @@ const Room = () => {
                     {user?<p className="font-bold text-ring pb-5">This Room is Created by {user.name} (@{user.username})</p>:<Skeleton className=" w-[30vw] h-5 rounded-md mb-5"/>}
                 </div>
                 <div className="bg-accent flex justify-between px-10 py-5 rounded-md text-ring">
-                    <h1>ROOM CODE: {room?.RoomId}</h1>
+                    <h1>ROOM CODE: {roomId}</h1>
                     <p>Users: 10/12</p>
                 </div>
                 <div className="border border-ring my-5 h-[40vh] rounded-md flex flex-col items-end overflow-auto py-5">
