@@ -1,6 +1,8 @@
 "use client"
 import CreateRoom from "@/components/CreateRoom";
 import Profile from "@/components/Profile";
+import { BACKEND_URL } from "@/lib/config";
+import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -11,6 +13,9 @@ const Dashboard = () => {
         if(!token){
             router.push("/signin")
         }
+        axios.get(`${BACKEND_URL}/me`,{headers:{Authorization:token}})
+        .then((e)=>console.log(e))
+        .catch((e)=>console.log(e))
     }, [router])
     return (
         <div className="flex my-[2vh] mx-[2vh]">

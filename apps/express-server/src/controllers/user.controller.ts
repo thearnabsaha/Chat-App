@@ -75,7 +75,7 @@ export const UserSignIn = async (req: Request, res: Response) => {
 export const UserProfile = async (req: Request, res: Response) => {
     try {
         const user = await prisma.user.findFirst({ where: { id: req.id } })
-        res.status(200).json({ message: { id: user?.id, username: user?.username, email: user?.email } })
+        res.status(200).json({ message: { id: user?.id, username: user?.username, email: user?.email,name:user?.name,photo:user?.photo } })
     } catch (error) {
         console.log(error)
         res.status(500).send(error)
