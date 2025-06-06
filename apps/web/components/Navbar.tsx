@@ -31,7 +31,13 @@ const Navbar = () => {
             })
             .catch((e) => console.log(e))
 
-        axios.get(`${BACKEND_URL}/room/${roomId}`, { headers: { Authorization: token } })
+        // axios.get(`${BACKEND_URL}/room/${roomId}`, { headers: { Authorization: token } })
+        //     .then((e) => {
+        //         // setUser(e.data.message)
+        //         console.log(e)
+        //     })
+        //     .catch((e) => console.log(e))
+        axios.get(`${BACKEND_URL}/room/`, { headers: { Authorization: token } })
             .then((e) => {
                 // setUser(e.data.message)
                 console.log(e)

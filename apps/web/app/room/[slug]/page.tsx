@@ -55,7 +55,7 @@ const Room = () => {
                     {user?<p className="font-bold text-ring pb-5">This Room is Created by {user.name} (@{user.username})</p>:<Skeleton className=" w-[30vw] h-5 rounded-md mb-5"/>}
                 </div>
                 <div className="bg-accent flex justify-between px-10 py-5 rounded-md text-ring">
-                    <h1>ROOM CODE: {roomId}</h1>
+                    {roomId?<h1>ROOM CODE: {roomId}</h1>:<Skeleton className="w-40 h-5 bg-ring"/>}
                     <p>Users: 10/12</p>
                 </div>
                 <div className="border border-ring my-5 h-[40vh] rounded-md flex flex-col items-end overflow-auto py-5">
