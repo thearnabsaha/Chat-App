@@ -6,8 +6,10 @@ import { GoCopy, GoCheck } from "react-icons/go";
 const CreateRoom = () => {
     const [toggle, setToggle] = useState(false)
     const [open, setOpen] = useState(false)
+    const [RoomString, setRoomString] = useState("")
     const copyHandler = () => {
         setToggle(true)
+        navigator.clipboard.writeText(RoomString)
         setTimeout(() => {
             setToggle(false)
         }, 800);
@@ -15,11 +17,11 @@ const CreateRoom = () => {
     const randomStringGenerator=()=>{
         const values="QWERTYUIOPASDFGHJKLZXCVBNM1234567890"
         let roomString=""
-        for (let i = 0; i < 8; i++) {
+        for (let i = 0; i < 6; i++) {
             const x=Math.floor(Math.random()*36)
             roomString+=values[x]
         }
-        console.log(roomString)
+        setRoomString(roomString)
     }
     const createHandler=()=>{
         randomStringGenerator()
@@ -38,7 +40,7 @@ const CreateRoom = () => {
                 {open&&<div className="flex flex-col items-center mt-5 bg-accent p-5 rounded-lg">
                     <p>Share this code with your friend</p>
                     <div className="flex items-center justify-center">
-                        <h1 className="text-3xl font-black pt-3">6TYW789</h1>
+                        <h1 className="text-3xl font-black pt-3">{RoomString}</h1>
                         <div onClick={copyHandler}>
                             {
                                 toggle ?
