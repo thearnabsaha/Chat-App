@@ -1,16 +1,29 @@
 "use client"
+import { BACKEND_URL } from "@/lib/config"
+import { useUserStore } from "@/lib/store/userStore"
 import { Button } from "@workspace/ui/components/button"
 import axios from "axios"
 import { useTheme } from "next-themes"
+import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 
 const Navbar = () => {
+    const router = useRouter()
+    const { setUser } = useUserStore()
     const { setTheme } = useTheme()
     const [toggle, setToggle] = useState<Boolean | null>(null)
     useEffect(() => {
+        const token = localStorage.getItem("token")
+        if (!token) {
+            router.push("/signin")
+        }
         const theme = localStorage.getItem("theme")
         setToggle(theme == "light" ? false : true)
-        // axios.get("/me")
+        axios.get(`${BACKEND_URL}/me`, { headers: { Authorization: token } })
+            .then((e) => {
+                setUser(e.data.message)
+            })
+            .catch((e) => console.log(e))
     }, [])
 
     const lightThemeHandler = () => {

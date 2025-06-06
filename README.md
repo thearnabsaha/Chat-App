@@ -1,6 +1,6 @@
 ## TODO
 
-1. Ensure chat messages are displayed one by one.
+1. Ensure the dashboard don't show only skeleton for the first time
 2. Fetch all chats for a particular room.
 3. Implement frontend components.
 4. Update message time handling in Prisma schema.
