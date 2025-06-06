@@ -12,6 +12,9 @@ import {
 import { Button } from "@workspace/ui/components/button";
 import { Input } from "@workspace/ui/components/input";
 import Link from "next/link"
+import axios from "axios"
+import toast, { Toaster } from 'react-hot-toast';
+import { BACKEND_URL } from "@/lib/config"
 const SignupSchema = z.object({
     email: z.string().email({ message: 'Invalid email address' }),
     username: z.string().min(3, { message: 'Username must be at least 3 characters long' }),
@@ -44,10 +47,17 @@ const Signup = () => {
     })
     function onSubmit(values: z.infer<typeof SignupSchema>) {
         console.log(values)
+        axios.post(`${BACKEND_URL}/signup`,{username:values.username,email:values.email,password:values.password,name:values.name,photo:values.photo})
+        .then((e)=>toast.success(e.data.message))
+        .catch((e)=>console.log(e))
         SignupForm.reset()
     }
     return (
         <div className=" w-96">
+            <Toaster
+  position="top-right"
+  reverseOrder={false}
+/>
             <Form {...SignupForm}>
                 <h1 className="text-3xl text-center">Make a New Account</h1>
                 <p className="text-center pt-3 pb-5 text-ring">User registration page to create account with email and password.</p>
