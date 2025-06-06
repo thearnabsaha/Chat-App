@@ -40,6 +40,8 @@ const Signin = () => {
             .then((e) => {
                 toast.success("Login Successfully!")
                 localStorage.setItem("token",e.data.token)
+            })
+            .then(()=>{
                 router.push('/dashboard')
             })
             .catch((e) => {
