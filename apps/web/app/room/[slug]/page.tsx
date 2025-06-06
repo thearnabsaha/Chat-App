@@ -42,7 +42,6 @@ const Room = () => {
         if (!roomid) {
             router.push(`/dashboard`)
         }
-        console.log(params.slug)
         if (roomid!=params.slug) {
             router.push(`/dashboard`)
         }

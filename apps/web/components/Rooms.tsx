@@ -17,7 +17,6 @@ const Rooms = () => {
         axios.get(`${BACKEND_URL}/room/`, { headers: { Authorization: token } })
             .then((e) => {
                 setroomData(e.data.room)
-                console.log(e.data.room)
             })
             .catch((e) => console.log(e))
     }, [])
@@ -26,12 +25,12 @@ const Rooms = () => {
         router.push(`/room/${slug}`)
     }
     return (
-        <div className=" overflow-auto">
+        <div className=" overflow-auto w-full">
             {
                 roomData.length ? roomData.map((e) => {
                     return (
                         <div key={e.id}>
-                            <div className="flex justify-between items-center p-5 w-[32vw] border mx-[1vw] my-5 rounded-md border-ring">
+                            <div className="flex justify-between items-center p-5 lg:w-[32vw] w-full border mx-[1vw] my-5 rounded-md border-ring">
                                 <h1 className="text-xl font-bold">Room No: {e.slug}</h1>
                                 <div className="space-x-3">
                                     <Button className="bg-destructive text-white hover:bg-destructive-foreground">Delete</Button>

@@ -61,7 +61,6 @@ const CreateRoom = () => {
         const token = localStorage.getItem("token")
         axios.get(`${BACKEND_URL}/room/${values.roomId}`, { headers: { Authorization: token } })
             .then((e) => {
-                console.log(e.status)
                 localStorage.setItem("roomId", values.roomId)
             })
             .then(() => {
@@ -71,7 +70,6 @@ const CreateRoom = () => {
                 if (e.status) {
                     axios.post(`${BACKEND_URL}/room`, { slug: values.roomId }, { headers: { Authorization: token } })
                         .then((e) => {
-                            console.log(e)
                             localStorage.setItem("roomId", values.roomId)
                         })
                         .then(() => {
@@ -86,7 +84,7 @@ const CreateRoom = () => {
 
     }
     return (
-        <div className="w-[60vw] h-[54vh] rounded-lg bg-accent flex justify-center items-center">
+        <div className="lg:w-[60vw] w-full h-[54vh] rounded-lg bg-accent flex justify-center items-center">
             <Toaster
                 position="top-right"
                 reverseOrder={false}

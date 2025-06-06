@@ -46,7 +46,6 @@ const Signup = () => {
         },
     })
     function onSubmit(values: z.infer<typeof SignupSchema>) {
-        console.log(values)
         axios.post(`${BACKEND_URL}/signup`, { username: values.username, email: values.email, password: values.password, name: values.name, photo: values.photo })
             .then((e) => toast.success(e.data.message))
             .catch((e) => {
