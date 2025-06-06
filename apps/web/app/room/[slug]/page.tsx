@@ -4,17 +4,41 @@ import { Button } from "@workspace/ui/components/button"
 import { Input } from "@workspace/ui/components/input"
 import { useEffect } from "react"
 import { useRouter } from 'next/navigation';
+import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormMessage,
+} from "@workspace/ui/components/form"
+
+const inputSchema = z.object({
+    msg: z.string().min(1),
+})
 const Room = () => {
     const router = useRouter();
     const { room } = useRoomStore()
+    const form = useForm<z.infer<typeof inputSchema>>({
+        resolver: zodResolver(inputSchema),
+        defaultValues: {
+            msg: "",
+        },
+    })
+
+    function onSubmit(values: z.infer<typeof inputSchema>) {
+        console.log(values)
+    }
     useEffect(() => {
-        if(!room){
+        if (!room) {
             router.push(`/dashboard`)
         }
     }, [])
     return (
         <div className="flex justify-center mt-10 font-mono">
-            <div className="w-[60vw] h-[70vh] border border-ring rounded-md p-10">
+            <div className="w-[60vw] h-[72vh] border border-ring rounded-md p-10">
                 <div>
                     <h1 className="text-3xl font-bold pb-1">Real Time Chat</h1>
                     <p className="font-bold text-ring pb-5">This Room is Created by Arnab (@thearnabsaha)</p>
@@ -36,8 +60,23 @@ const Room = () => {
                     <p className=" py-2 px-5 rounded-lg mx-5 my-1 bg-primary text-secondary max-w-96">My msgs</p>
                 </div>
                 <div className="flex">
-                    <Input placeholder="Type a Msssage here..." className="border-ring"/>
-                    <Button className="ml-5">Send</Button>
+                    <Form {...form}>
+                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 flex w-full justify-between">
+                            <FormField
+                                control={form.control}
+                                name="msg"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormControl>
+                                            <Input  placeholder="Type a Msssage here..." className="border-ring w-[50vw]"{...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <Button type="submit" className="ml-5">Send</Button>
+                        </form>
+                    </Form>
                 </div>
             </div>
         </div>
