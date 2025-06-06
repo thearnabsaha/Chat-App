@@ -3,6 +3,7 @@ import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { useRouter } from 'next/navigation';
+import toast, { Toaster } from 'react-hot-toast';
 import {
     Form,
     FormControl,
@@ -13,6 +14,8 @@ import {
 import { Button } from "@workspace/ui/components/button";
 import { Input } from "@workspace/ui/components/input";
 import Link from "next/link"
+import axios from "axios";
+import { BACKEND_URL } from "@/lib/config";
 const SigninSchema = z.object({
     username: z.string().min(3, { message: 'Username must be at least 3 characters long' }),
     password: z
@@ -33,11 +36,24 @@ const Signin = () => {
         },
     })
     function onSubmit(values: z.infer<typeof SigninSchema>) {
-        router.push('/dashboard')
-        SigninForm.reset()
+            axios.post(`${BACKEND_URL}/signin`, { username: values.username, password: values.password})
+            .then((e) => {
+                toast.success("Login Successfully!")
+                localStorage.setItem("token",e.data.token)
+                router.push('/dashboard')
+            })
+            .catch((e) => {
+                toast.error("Signin Failed")
+                console.log(e)
+            })
+            SigninForm.reset()
     }
     return (
         <div className=" w-96">
+            <Toaster
+                position="top-right"
+                reverseOrder={false}
+            />
             <Form {...SigninForm}>
                 <h1 className="text-3xl text-center">Login to Your Account</h1>
                 <p className="text-center pt-3 pb-5 text-ring">User login page to access account using username and password.</p>

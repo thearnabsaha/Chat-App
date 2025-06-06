@@ -47,17 +47,20 @@ const Signup = () => {
     })
     function onSubmit(values: z.infer<typeof SignupSchema>) {
         console.log(values)
-        axios.post(`${BACKEND_URL}/signup`,{username:values.username,email:values.email,password:values.password,name:values.name,photo:values.photo})
-        .then((e)=>toast.success(e.data.message))
-        .catch((e)=>console.log(e))
+        axios.post(`${BACKEND_URL}/signup`, { username: values.username, email: values.email, password: values.password, name: values.name, photo: values.photo })
+            .then((e) => toast.success(e.data.message))
+            .catch((e) => {
+                toast.error("Signup Failed")
+                console.log(e)
+            })
         SignupForm.reset()
     }
     return (
         <div className=" w-96">
             <Toaster
-  position="top-right"
-  reverseOrder={false}
-/>
+                position="top-right"
+                reverseOrder={false}
+            />
             <Form {...SignupForm}>
                 <h1 className="text-3xl text-center">Make a New Account</h1>
                 <p className="text-center pt-3 pb-5 text-ring">User registration page to create account with email and password.</p>
