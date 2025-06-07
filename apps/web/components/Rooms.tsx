@@ -34,6 +34,7 @@ const roomSlugSchema = z.object({
 import { Input } from "@workspace/ui/components/input";
 import toast, { Toaster } from "react-hot-toast";
 const Rooms = () => {
+    const [disabled, setdisabled] = useState(false)
     const roomSlugform = useForm<z.infer<typeof roomSlugSchema>>({
         resolver: zodResolver(roomSlugSchema),
         defaultValues: {
@@ -54,6 +55,16 @@ const Rooms = () => {
         localStorage.setItem("roomId", slug)
         router.push(`/room/${slug}`)
     }
+    const deleteRoom = (slug:string) => {
+        const token = localStorage.getItem("token")
+        axios.delete(`${BACKEND_URL}/room/${slug}`, { headers: { Authorization: token } })
+            .then((e) => {
+                toast.success("Room Deleted")
+                window.location.reload()
+            }).catch((e)=>{
+                console.log(e)
+            })
+    }
     return (
         <div className=" overflow-auto w-full">
             <Toaster
@@ -64,8 +75,8 @@ const Rooms = () => {
                 roomData.length ? roomData.map((e) => {
                     function onSubmit(values: z.infer<typeof roomSlugSchema>) {
                         if (values.roomSlug === e.slug) {
-                            console.log("deleted")
-                            toast.success("Room Deleted")
+                            setdisabled(true)
+                            deleteRoom(e.slug)
                         } else {
                             toast.error("Wrong Room ID")
                         }
@@ -91,6 +102,7 @@ const Rooms = () => {
                                                         <FormField
                                                             control={roomSlugform.control}
                                                             name="roomSlug"
+                                                            disabled={disabled}
                                                             render={({ field }) => (
                                                                 <FormItem>
                                                                     <FormControl>
@@ -103,7 +115,7 @@ const Rooms = () => {
                                                                 </FormItem>
                                                             )}
                                                         />
-                                                        <Button type="submit" className="bg-destructive text-white hover:bg-destructive-foreground w-full">Delete Permanently</Button>
+                                                        <Button type="submit" className="bg-destructive text-white hover:bg-destructive-foreground w-full" disabled={disabled}>Delete Permanently</Button>
                                                     </form>
                                                 </Form>
                                             </DialogHeader>
