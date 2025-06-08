@@ -184,16 +184,11 @@ const Rooms = () => {
                         </div>
                     )
                 }) : <div>
-                    <Skeleton className="p-8 w-[32vw] mx-[1vw] my-10 rounded-md bg-ring" />
-                    <Skeleton className="p-8 w-[32vw] mx-[1vw] my-10 rounded-md bg-ring" />
-                    <Skeleton className="p-8 w-[32vw] mx-[1vw] my-10 rounded-md bg-ring" />
-                    <Skeleton className="p-8 w-[32vw] mx-[1vw] my-10 rounded-md bg-ring" />
-                    <Skeleton className="p-8 w-[32vw] mx-[1vw] my-10 rounded-md bg-ring" />
-                    <Skeleton className="p-8 w-[32vw] mx-[1vw] my-10 rounded-md bg-ring" />
-                    <Skeleton className="p-8 w-[32vw] mx-[1vw] my-10 rounded-md bg-ring" />
-                    <Skeleton className="p-8 w-[32vw] mx-[1vw] my-10 rounded-md bg-ring" />
-                    <Skeleton className="p-8 w-[32vw] mx-[1vw] my-10 rounded-md bg-ring" />
-                    <Skeleton className="p-8 w-[32vw] mx-[1vw] my-10 rounded-md bg-ring" />
+                    {["a","b","c","d","e","f"].map((e) => {
+                      return(
+                          <Skeleton className="p-8 w-[32vw] mx-[1vw] my-10 rounded-md bg-ring" key={e}/>
+                        )  
+                    })}
                 </div>
             }
 

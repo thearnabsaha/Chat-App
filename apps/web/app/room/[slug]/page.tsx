@@ -1,5 +1,4 @@
 "use client"
-import { useRoomStore } from "@/lib/store/roomStore"
 import { Button } from "@workspace/ui/components/button"
 import { Input } from "@workspace/ui/components/input"
 import { useEffect, useState } from "react"
@@ -18,13 +17,11 @@ import { useUserStore } from "@/lib/store/userStore"
 import { Skeleton } from "@workspace/ui/components/skeleton"
 import axios from "axios"
 import { BACKEND_URL } from "@/lib/config"
-import toast from "react-hot-toast"
 const inputSchema = z.object({
     msg: z.string().min(1),
 })
 const Room = () => {
     const router = useRouter();
-    const { room } = useRoomStore()
     const { user } = useUserStore()
     const [roomId, setroomId] = useState<string|null>("")
     const InputForm = useForm<z.infer<typeof inputSchema>>({
@@ -59,20 +56,13 @@ const Room = () => {
         }
         axios.get(`${BACKEND_URL}/chat/${roomid}`, { headers: { Authorization: token } })
             .then((e) => {
-                // toast.success("Room Updated")
-                // console.log(e.data.allchats)
                 setMessage(e.data.allchats)
-                // window.location.reload()
             }).catch((e) => {
                 console.log(e)
             })
         axios.get(`${BACKEND_URL}/me`, { headers: { Authorization: token } })
             .then((e) => {
-                // toast.success("Room Updated")
-                // console.log(e.data.message.id)
                 setUserId(e.data.message.id)
-                // setMessage(e.data.allchats)
-                // window.location.reload()
             }).catch((e) => {
                 console.log(e)
             })
@@ -94,8 +84,8 @@ const Room = () => {
                             return(
                                 <div key={e.id+e.userId+e.roomId+e.message} className="w-full flex flex-col items-end">
                                     {e.userId===userId?
-                                    <p className=" py-2 px-5 rounded-lg mx-5 my-1 bg-primary text-secondary max-w-96 capitalize">{e.message}</p>
-                                    :<p className="py-2 px-5 rounded-lg mx-5 my-1 bg-accent self-start max-w-96">{e.message}</p>}
+                                    <p className=" py-2 px-5 rounded-lg mx-5 my-1 bg-primary text-secondary max-w-96">{e.message.charAt(0).toUpperCase() + e.message.slice(1)}</p>
+                                    :<p className="py-2 px-5 rounded-lg mx-5 my-1 bg-accent self-start max-w-96">{e.message.charAt(0).toUpperCase() + e.message.slice(1)}</p>}
                                 </div>
                             )
                         })
