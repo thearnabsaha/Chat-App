@@ -100,13 +100,13 @@ const Room = () => {
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormControl>
-                                            <Input  placeholder="Type a Msssage here..." className="border-ring w-[50vw]"{...field} />
+                                            <Input  placeholder="Type a Msssage here..." className="border-ring w-[50vw] p-5"{...field} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
                                 )}
                             />
-                            <Button type="submit" className="ml-5">Send</Button>
+                            <Button type="submit" className="ml-5 p-5">Send</Button>
                         </form>
                     </Form>
                 </div>

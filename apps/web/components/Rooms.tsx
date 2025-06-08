@@ -166,9 +166,6 @@ const Rooms = () => {
                                                                     <FormControl>
                                                                         <Input placeholder="Room ID" {...field} />
                                                                     </FormControl>
-                                                                    {/* <FormDescription>
-                                                                        Type "{e.slug}" to Confirm Delete Permanently
-                                                                    </FormDescription> */}
                                                                     <FormMessage />
                                                                 </FormItem>
                                                             )}
