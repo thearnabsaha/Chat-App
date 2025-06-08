@@ -1,7 +1,7 @@
 ## TODO
 
-1. Ensure the dashboard don't show only skeleton for the first time
-2. Fetch all chats for a particular room.
+1. Ensure the chat don't show only skeleton for the first time
+2. Input send should add the input in the database
 3. Implement frontend components.
 4. Update message time handling in Prisma schema.
 5. Add admin check for deletechat and delete room.
