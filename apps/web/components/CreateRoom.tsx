@@ -64,7 +64,7 @@ const CreateRoom = () => {
                 localStorage.setItem("roomId", values.roomId)
             })
             .then(() => {
-                // router.push(`/room/${values.roomId}`)
+                router.push(`/room/${values.roomId}`)
             })
             .catch((e) => {
                 if (e.status) {

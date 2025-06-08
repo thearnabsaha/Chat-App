@@ -41,6 +41,12 @@ const Rooms = () => {
             roomSlug: "",
         },
     })
+    const roomUpdateform = useForm<z.infer<typeof roomSlugSchema>>({
+        resolver: zodResolver(roomSlugSchema),
+        defaultValues: {
+            roomSlug: "",
+        },
+    })
     const [roomData, setroomData] = useState<Room[]>([])
     const router = useRouter()
     useEffect(() => {
@@ -55,13 +61,23 @@ const Rooms = () => {
         localStorage.setItem("roomId", slug)
         router.push(`/room/${slug}`)
     }
-    const deleteRoom = (slug:string) => {
+    const deleteRoom = (slug: string) => {
         const token = localStorage.getItem("token")
         axios.delete(`${BACKEND_URL}/room/${slug}`, { headers: { Authorization: token } })
             .then((e) => {
                 toast.success("Room Deleted")
                 window.location.reload()
-            }).catch((e)=>{
+            }).catch((e) => {
+                console.log(e)
+            })
+    }
+    const updateRoom = (slug: string, newSlug: string) => {
+        const token = localStorage.getItem("token")
+        axios.put(`${BACKEND_URL}/room/${slug}`, { slug: newSlug }, { headers: { Authorization: token } })
+            .then((e) => {
+                toast.success("Room Updated")
+                window.location.reload()
+            }).catch((e) => {
                 console.log(e)
             })
     }
@@ -79,6 +95,14 @@ const Rooms = () => {
                             deleteRoom(e.slug)
                         } else {
                             toast.error("Wrong Room ID")
+                        }
+                    }
+                    function onSubmit2(values: z.infer<typeof roomSlugSchema>) {
+                        if (values.roomSlug === e.slug) {
+                            toast.error("Room ID is Same")
+                        } else {
+                            setdisabled(true)
+                            updateRoom(e.slug, values.roomSlug)
                         }
                     }
                     return (
@@ -121,7 +145,40 @@ const Rooms = () => {
                                             </DialogHeader>
                                         </DialogContent>
                                     </Dialog>
-                                    <Button className="bg-chart-3 text-white hover:bg-chart-5">Rename</Button>
+                                    <Dialog>
+                                        <DialogTrigger className="bg-chart-3 text-white hover:bg-chart-5 px-4 py-1.5 rounded-md cursor-pointer">
+                                            Rename
+                                        </DialogTrigger>
+                                        <DialogContent>
+                                            <DialogHeader>
+                                                <DialogTitle className="text-2xl text-center">Are you sure to Rename Room</DialogTitle>
+                                                <DialogDescription className="text-center">
+                                                    Update the Room Name by Clicking a Button
+                                                </DialogDescription>
+                                                <Form {...roomUpdateform}>
+                                                    <form onSubmit={roomUpdateform.handleSubmit(onSubmit2)} className="space-y-4">
+                                                        <FormField
+                                                            control={roomUpdateform.control}
+                                                            name="roomSlug"
+                                                            disabled={disabled}
+                                                            render={({ field }) => (
+                                                                <FormItem>
+                                                                    <FormControl>
+                                                                        <Input placeholder="Room ID" {...field} />
+                                                                    </FormControl>
+                                                                    {/* <FormDescription>
+                                                                        Type "{e.slug}" to Confirm Delete Permanently
+                                                                    </FormDescription> */}
+                                                                    <FormMessage />
+                                                                </FormItem>
+                                                            )}
+                                                        />
+                                                        <Button type="submit" className="bg-chart-3 text-white hover:bg-chart-5 w-full" disabled={disabled}>Rename Room</Button>
+                                                    </form>
+                                                </Form>
+                                            </DialogHeader>
+                                        </DialogContent>
+                                    </Dialog>
                                 </div>
                             </div>
                         </div>
