@@ -79,7 +79,6 @@ const CreateRoom = () => {
                         })
                 }
             })
-
     }
     return (
         <div className="rounded-lg bg-accent flex justify-center items-center lg:h-full md:h-[600px] mt-2.5 p-5 lg:p-0">

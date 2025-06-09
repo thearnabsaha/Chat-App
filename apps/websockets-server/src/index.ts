@@ -7,8 +7,15 @@ wss.on('connection', (socket) => {
         socket.on('message', (message) => {
             const messageInString=message.toString()
             const data=JSON.parse(messageInString)
-            socket.send(data)
-            // console.log(JSON.parse(messageInString))
+            if(data.type=="JOIN"){
+                socket.send(data.payload.message)
+            }
+            if(data.type=="CHAT"){
+                socket.send(data.payload.message)
+            }
+            if(data.type=="LEAVE"){
+                socket.send(data.payload.message)
+            }
         });
     } catch (error) {
         console.log(error);

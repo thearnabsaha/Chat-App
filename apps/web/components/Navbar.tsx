@@ -33,7 +33,6 @@ const Navbar = () => {
             })
             .catch((e) => console.log(e))
     }, [router])
-
     const lightThemeHandler = () => {
         setTheme("light")
         setToggle(false)
@@ -47,7 +46,6 @@ const Navbar = () => {
         localStorage.removeItem("roomId")
         router.push("/signin")
     }
-
     return (
         <div className="bg-accent sm:py-5 py-1 sm:my-5 mt-1 mb-1 md:mx-10 mx-3 rounded-xl flex justify-between">
             <h1 className="text-3xl pl-10">Chaty</h1>

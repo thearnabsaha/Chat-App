@@ -20,8 +20,6 @@ const Profile = () => {
             {user?<h1 className=' capitalize'>Name: {user?.name}</h1>:<Skeleton className="bg-ring w-30 h-5" />}
             {user?<p>Username: @{user?.username}</p>:<Skeleton className="bg-ring w-72 h-5" />}
             {user?<p className='break-words'>Email: {user?.email}</p>:<Skeleton className="bg-ring md:w-96 w-72 h-5" />}
-            
-            
         </div>
     )
 }
