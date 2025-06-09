@@ -87,7 +87,7 @@ export const UpdateRoom = async (req: Request, res: Response) => {
         res.status(500).json({ error })
     }
 }
-export const deleteRoom = async (req: Request, res: Response) => {
+export const DeleteRoom = async (req: Request, res: Response) => {
     try {
         const user = await prisma.user.findFirst({ where: { id: req.id } })
         if (!user) {
@@ -111,7 +111,7 @@ export const deleteRoom = async (req: Request, res: Response) => {
         res.status(500).json({ error })
     }
 }
-export const deleteRooms = async (req: Request, res: Response) => {
+export const DeleteRooms = async (req: Request, res: Response) => {
     try {
         const user = await prisma.user.findFirst({ where: { id: req.id } })
         if (!user) {

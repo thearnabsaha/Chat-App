@@ -15,26 +15,8 @@ import Link from "next/link"
 import axios from "axios"
 import toast, { Toaster } from 'react-hot-toast';
 import { BACKEND_URL } from "@/lib/config"
-const SignupSchema = z.object({
-    email: z.string().email({ message: 'Invalid email address' }),
-    username: z.string().min(3, { message: 'Username must be at least 3 characters long' }),
-    name: z
-        .string()
-        .min(2, { message: 'Name must be at least 2 characters long' })
-        .max(50, { message: 'Name must be at most 50 characters long' }),
-    photo: z
-        .string()
-        .url({ message: 'Photo must be a valid URL' })
-        .optional()
-        .or(z.literal('')),
-    password: z
-        .string()
-        .min(8, { message: 'Password must be at least 8 characters long' })
-        .regex(/[A-Z]/, { message: 'Password must contain at least one uppercase letter' })
-        .regex(/[a-z]/, { message: 'Password must contain at least one lowercase letter' })
-        .regex(/[0-9]/, { message: 'Password must contain at least one number' })
-        .regex(/[@$!%*?&]/, { message: 'Password must contain at least one special character' }),
-});
+import { SignupSchema } from '@workspace/common/types';
+
 const Signup = () => {
     const SignupForm = useForm<z.infer<typeof SignupSchema>>({
         resolver: zodResolver(SignupSchema),

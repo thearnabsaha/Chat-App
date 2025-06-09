@@ -14,7 +14,6 @@ import {
     FormDescription,
     FormField,
     FormItem,
-    FormLabel,
     FormMessage,
 } from "@workspace/ui/components/form"
 import {
@@ -28,21 +27,19 @@ import {
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-const roomSlugSchema = z.object({
-    roomSlug: z.string().length(6)
-})
+import { RoomSlugSchema } from '@workspace/common/types';
 import { Input } from "@workspace/ui/components/input";
 import toast, { Toaster } from "react-hot-toast";
 const Rooms = () => {
     const [disabled, setdisabled] = useState(false)
-    const roomSlugform = useForm<z.infer<typeof roomSlugSchema>>({
-        resolver: zodResolver(roomSlugSchema),
+    const roomSlugform = useForm<z.infer<typeof RoomSlugSchema>>({
+        resolver: zodResolver(RoomSlugSchema),
         defaultValues: {
             roomSlug: "",
         },
     })
-    const roomUpdateform = useForm<z.infer<typeof roomSlugSchema>>({
-        resolver: zodResolver(roomSlugSchema),
+    const roomUpdateform = useForm<z.infer<typeof RoomSlugSchema>>({
+        resolver: zodResolver(RoomSlugSchema),
         defaultValues: {
             roomSlug: "",
         },
@@ -90,7 +87,7 @@ const Rooms = () => {
             <h1 className="text-center pt-5 text-2xl px-2">You Are Admin of These Rooms</h1>
             {
                 roomData.length ? roomData.map((e) => {
-                    function onSubmit(values: z.infer<typeof roomSlugSchema>) {
+                    function onDeleteSubmit(values: z.infer<typeof RoomSlugSchema>) {
                         if (values.roomSlug === e.slug) {
                             setdisabled(true)
                             deleteRoom(e.slug)
@@ -98,7 +95,7 @@ const Rooms = () => {
                             toast.error("Wrong Room ID")
                         }
                     }
-                    function onSubmit2(values: z.infer<typeof roomSlugSchema>) {
+                    function onRenameSubmit(values: z.infer<typeof RoomSlugSchema>) {
                         if (values.roomSlug === e.slug) {
                             toast.error("Room ID is Same")
                         } else {
@@ -123,7 +120,7 @@ const Rooms = () => {
                                                     This action cannot be undone. This will permanently delete your Room and remove your data from our servers.
                                                 </DialogDescription>
                                                 <Form {...roomSlugform}>
-                                                    <form onSubmit={roomSlugform.handleSubmit(onSubmit)} className="space-y-2">
+                                                    <form onSubmit={roomSlugform.handleSubmit(onDeleteSubmit)} className="space-y-2">
                                                         <FormField
                                                             control={roomSlugform.control}
                                                             name="roomSlug"
@@ -157,7 +154,7 @@ const Rooms = () => {
                                                     Update the Room Name by Clicking a Button
                                                 </DialogDescription>
                                                 <Form {...roomUpdateform}>
-                                                    <form onSubmit={roomUpdateform.handleSubmit(onSubmit2)} className="space-y-4">
+                                                    <form onSubmit={roomUpdateform.handleSubmit(onRenameSubmit)} className="space-y-4">
                                                         <FormField
                                                             control={roomUpdateform.control}
                                                             name="roomSlug"
@@ -189,7 +186,6 @@ const Rooms = () => {
                     })}
                 </div>
             }
-
         </div>
     )
 }

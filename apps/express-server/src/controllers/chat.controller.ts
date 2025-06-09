@@ -43,7 +43,7 @@ export const AllChats = async (req: Request, res: Response) => {
         res.status(500).json({error})
     }
 }
-export const updateChat = async (req: Request, res: Response) => {
+export const UpdateChat = async (req: Request, res: Response) => {
     try {
         const user=await prisma.user.findFirst({where:{id:req.id}})
         if(!user){
@@ -88,7 +88,7 @@ export const RoomChats = async (req: Request, res: Response) => {
         res.status(500).json({error})
     }
 }
-export const deleteChat = async (req: Request, res: Response) => {
+export const DeleteChat = async (req: Request, res: Response) => {
     try {
         const user=await prisma.user.findFirst({where:{id:req.id}})
         if(!user){
@@ -111,7 +111,7 @@ export const deleteChat = async (req: Request, res: Response) => {
         res.status(500).json({error})
     }
 }
-export const deleteRoomChat = async (req: Request, res: Response) => {
+export const DeleteRoomChat = async (req: Request, res: Response) => {
     try {
         const user=await prisma.user.findFirst({where:{id:req.id}})
         if(!user){
@@ -130,7 +130,7 @@ export const deleteRoomChat = async (req: Request, res: Response) => {
         res.status(500).json({error})
     }
 }
-export const deleteAllChats = async (req: Request, res: Response) => {
+export const DeleteAllChats = async (req: Request, res: Response) => {
     try {
         const user=await prisma.user.findFirst({where:{id:req.id}})
         if(!user){

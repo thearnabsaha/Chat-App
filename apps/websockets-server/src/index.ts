@@ -5,7 +5,10 @@ wss.on('connection', (socket) => {
     socket.send('Server is sending this message');
     try {
         socket.on('message', (message) => {
-            socket.send(message.toString())
+            const messageInString=message.toString()
+            const data=JSON.parse(messageInString)
+            socket.send(data)
+            // console.log(JSON.parse(messageInString))
         });
     } catch (error) {
         console.log(error);

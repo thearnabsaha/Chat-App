@@ -20,9 +20,7 @@ import { Skeleton } from "@workspace/ui/components/skeleton";
 import axios from "axios";
 import { BACKEND_URL } from "@/lib/config";
 import toast, { Toaster } from "react-hot-toast";
-const roomInputSchema = z.object({
-    roomId: z.string().min(6).max(6),
-})
+import { RoomInputSchema } from '@workspace/common/types';
 const CreateRoom = () => {
     const router = useRouter();
     const [toggle, setToggle] = useState(false)
@@ -51,13 +49,13 @@ const CreateRoom = () => {
         randomStringGenerator()
         setOpen(true)
     }
-    const RoomInputForm = useForm<z.infer<typeof roomInputSchema>>({
-        resolver: zodResolver(roomInputSchema),
+    const RoomInputForm = useForm<z.infer<typeof RoomInputSchema>>({
+        resolver: zodResolver(RoomInputSchema),
         defaultValues: {
             roomId: "",
         },
     })
-    function onSubmit(values: z.infer<typeof roomInputSchema>) {
+    function onSubmit(values: z.infer<typeof RoomInputSchema>) {
         const token = localStorage.getItem("token")
         axios.get(`${BACKEND_URL}/room/${values.roomId}`, { headers: { Authorization: token } })
             .then((e) => {
