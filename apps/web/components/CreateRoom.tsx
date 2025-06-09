@@ -84,29 +84,29 @@ const CreateRoom = () => {
 
     }
     return (
-        <div className="lg:w-[60vw] w-full h-[54vh] rounded-lg bg-accent flex justify-center items-center">
+        <div className="rounded-lg bg-accent flex justify-center items-center lg:h-full md:h-[600px] mt-2.5 p-5">
             <Toaster
                 position="top-right"
                 reverseOrder={false}
             />
-            {user ? <div className="rounded-xl flex flex-col w-[600px] p-16 bg-card">
+            {user ? <div className="rounded-xl flex flex-col md:w-[600px] sm:p-16 p-10 bg-card w-full">
                 <h1 className="text-3xl font-bold pb-1">Real Time Chat</h1>
                 <p className=" font-bold text-ring pb-5">Make a Room by just clicking a Button</p>
                 <Form {...RoomInputForm}>
-                    <form onSubmit={RoomInputForm.handleSubmit(onSubmit)} className=" space-y-4 flex w-full">
+                    <form onSubmit={RoomInputForm.handleSubmit(onSubmit)} className=" space-y-4 flex w-full flex-col md:flex-row">
                         <FormField
                             control={RoomInputForm.control}
                             name="roomId"
                             render={({ field }) => (
                                 <FormItem>
                                     <FormControl>
-                                        <Input placeholder="Room No." {...field} className="border border-ring w-84" />
+                                        <Input placeholder="Room No." {...field} className="border border-ring md:w-84" />
                                     </FormControl>
                                     <FormMessage className="text-xs mt-2" />
                                 </FormItem>
                             )}
                         />
-                        <Button type="submit" className="ml-4 text-md font-bold">Join Room</Button>
+                        <Button type="submit" className="md:ml-4 text-md font-bold md:w-fit mb-5">Join Room</Button>
                     </form>
                 </Form>
                 <Button className="font-bold text-md py-3" onClick={createHandler}>Create a New Room</Button>

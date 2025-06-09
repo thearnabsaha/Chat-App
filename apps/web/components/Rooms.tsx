@@ -87,6 +87,7 @@ const Rooms = () => {
                 position="top-right"
                 reverseOrder={false}
             />
+            <h1 className="text-center pt-5 text-2xl px-2">You Are Admin of These Rooms</h1>
             {
                 roomData.length ? roomData.map((e) => {
                     function onSubmit(values: z.infer<typeof roomSlugSchema>) {
@@ -106,8 +107,8 @@ const Rooms = () => {
                         }
                     }
                     return (
-                        <div key={e.id}>
-                            <div className="flex justify-between items-center p-5 lg:w-[32vw] w-full border mx-[1vw] my-5 rounded-md border-ring">
+                        <div key={e.id} className="w-full px-5">
+                            <div className="flex flex-col md:flex-row md:justify-between items-center p-5 lg:w-[32vw] w-full border my-5 rounded-md border-ring">
                                 <h1 className="text-xl font-bold">Room No: {e.slug}</h1>
                                 <div className="space-x-3">
                                     <Button className="bg-chart-2 text-white hover:bg-chart-4" onClick={() => joinHandler(e.slug)}>Join</Button>
@@ -181,10 +182,10 @@ const Rooms = () => {
                         </div>
                     )
                 }) : <div>
-                    {["a","b","c","d","e","f"].map((e) => {
-                      return(
-                          <Skeleton className="p-8 w-[32vw] mx-[1vw] my-10 rounded-md bg-ring" key={e}/>
-                        )  
+                    {["a", "b", "c", "d", "e", "f"].map((e) => {
+                        return (
+                            <Skeleton className="p-8 w-[32vw] mx-[1vw] my-10 rounded-md bg-ring" key={e} />
+                        )
                     })}
                 </div>
             }

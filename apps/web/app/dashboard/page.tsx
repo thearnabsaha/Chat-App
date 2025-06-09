@@ -5,11 +5,11 @@ import Rooms from "@/components/Rooms";
 
 const Dashboard = () => {
     return (
-        <div className="flex my-[2vh] mx-[2vh] flex-col-reverse lg:flex-row ">
-            <div className="border flex w-[40vw] h-[86vh] mx-[1vh] rounded-lg bg-accent mt-[2vh] lg:mt-0">
+        <div className="flex justify-between mx-3 md:mx-10 lg:flex-row flex-col-reverse">
+            <div className="border flex rounded-lg bg-accent lg:h-[85vh] h-full pt-5 mt-5 lg:mt-0">
                 <Rooms/>
             </div>
-            <div className=" flex flex-col mx-[1vh] rounded-lg font-mono w-full">
+            <div className=" flex flex-col rounded-lg font-mono w-full lg:ml-5">
                 <Profile/>
                 <CreateRoom />
             </div>

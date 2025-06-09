@@ -12,14 +12,14 @@ const Profile = () => {
         return (firstInitial + lastInitial).toUpperCase();
         };
     return (
-        <div className='lg:w-[60vw] h-[30vh] rounded-lg mb-[2vh] bg-accent flex flex-col items-center pt-10 space-y-3 w-full'>
+        <div className='rounded-lg bg-accent flex flex-col items-center pt-10 space-y-3 w-full lg:h-96 mb-2.5 h-60'>
                 {user?<Avatar className='size-15'>
                 {/* <AvatarImage src="https://github.com/shadcn.png" /> */}
                 <AvatarFallback className='text-3xl font-bold bg-primary text-secondary'>{getInitials(user?.name||"")}</AvatarFallback>
             </Avatar>:<Skeleton className="size-15 rounded-full bg-ring" />}
             {user?<h1 className=' capitalize'>Name: {user?.name}</h1>:<Skeleton className="bg-ring w-30 h-5" />}
             {user?<p>Username: @{user?.username}</p>:<Skeleton className="bg-ring w-72 h-5" />}
-            {user?<p>Email: {user?.email}</p>:<Skeleton className="bg-ring w-96 h-5" />}
+            {user?<p className='break-words'>Email: {user?.email}</p>:<Skeleton className="bg-ring w-96 h-5" />}
             
             
         </div>

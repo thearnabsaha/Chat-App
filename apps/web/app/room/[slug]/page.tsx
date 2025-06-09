@@ -32,7 +32,6 @@ const Room = () => {
     })
 
     function onSubmit(values: z.infer<typeof inputSchema>) {
-        console.log(values)
         const token = localStorage.getItem("token")
         const roomid = localStorage.getItem("roomId")
         axios.post(`${BACKEND_URL}/chat`, {slug:roomid,message:values.msg}, { headers: { Authorization: token } })
