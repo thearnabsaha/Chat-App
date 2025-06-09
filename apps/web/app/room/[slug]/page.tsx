@@ -76,8 +76,8 @@ const Room = () => {
     }, [])
 
     return (
-        <div className="flex justify-center mt-10 font-mono">
-            <div className="w-[60vw] h-[72vh] border border-ring rounded-md p-10">
+        <div className="flex justify-center sm:mt-10 mt-1 font-mono">
+            <div className="lg:w-[60vw] border border-ring rounded-md md:p-10 p-5 w-full md:m-10 m-2 lg:m-0">
                 <div>
                     {user?<h1 className="text-3xl font-bold pb-1">Real Time Chat</h1>:<Skeleton className=" w-96 h-10 mb-1 rounded-md"/>}
                     {user?<p className="font-bold text-ring pb-5">This Room is Created by <span className=" capitalize">{user.name}</span> (@{user.username})</p>:<Skeleton className=" w-[30vw] h-5 rounded-md mb-5"/>}
@@ -101,14 +101,14 @@ const Room = () => {
                 </div>
                 <div className="flex">
                     <Form {...InputForm}>
-                        <form onSubmit={InputForm.handleSubmit(onSubmit)} className="space-y-8 flex w-full justify-between">
+                        <form onSubmit={InputForm.handleSubmit(onSubmit)} className="space-y-1 flex w-full justify-between">
                             <FormField
                                 control={InputForm.control}
                                 name="msg"
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormControl>
-                                            <Input  placeholder="Type a Msssage here..." className="border-ring w-[50vw] p-5"{...field} />
+                                            <Input  placeholder="Type a Msssage here..." className="border-ring lg:w-[45vw] md:w-[70vw] sm:w-full p-5"{...field}/>
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>

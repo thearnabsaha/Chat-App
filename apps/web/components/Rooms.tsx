@@ -184,7 +184,7 @@ const Rooms = () => {
                 }) : <div>
                     {["a", "b", "c", "d", "e", "f"].map((e) => {
                         return (
-                            <Skeleton className="p-8 w-[32vw] mx-[1vw] my-10 rounded-md bg-ring" key={e} />
+                            <Skeleton className="p-8 md:w-[32vw] w-72 md:mx-[1vw] ml-8 sm:ml-0 my-10 rounded-md bg-ring" key={e} />
                         )
                     })}
                 </div>
