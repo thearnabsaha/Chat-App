@@ -51,7 +51,7 @@ const Signin = () => {
             SigninForm.reset()
     }
     return (
-        <div className=" w-96">
+        <div className=" md:w-96 w-full p-5">
             <Toaster
                 position="top-right"
                 reverseOrder={false}

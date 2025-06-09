@@ -1,6 +1,5 @@
 "use client"
 import { BACKEND_URL } from "@/lib/config"
-import { useRoomStore } from "@/lib/store/roomStore"
 import { useUserStore } from "@/lib/store/userStore"
 import { Button } from "@workspace/ui/components/button"
 import axios from "axios"
@@ -8,7 +7,13 @@ import { useTheme } from "next-themes"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
-
+import { RxHamburgerMenu } from "react-icons/rx";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from "@workspace/ui/components/dropdown-menu"
 const Navbar = () => {
     const router = useRouter()
     const { setUser } = useUserStore()
@@ -42,10 +47,22 @@ const Navbar = () => {
         localStorage.removeItem("roomId")
         router.push("/signin")
     }
+
     return (
-        <div className="bg-accent py-5 my-5 mx-10 rounded-xl flex justify-between">
+        <div className="bg-accent py-5 my-5 md:mx-10 mx-3 rounded-xl flex justify-between">
             <h1 className="text-3xl pl-10">Chaty</h1>
-            <div>
+            <DropdownMenu>
+                <DropdownMenuTrigger className="md:hidden px-4 py-1.5 rounded-md cursor-pointer mr-10"><RxHamburgerMenu className="text-3xl" /></DropdownMenuTrigger>
+                <DropdownMenuContent>
+                    <DropdownMenuItem><Link className="pr-5 cursor-pointer hover:underline" href={"/dashboard"}>Dashboard</Link></DropdownMenuItem>
+                    <DropdownMenuItem><p className="pr-5 hover:underline cursor-pointer" onClick={logoutHandler}>Logout</p></DropdownMenuItem>
+                    {
+                        toggle ? <DropdownMenuItem className="" onClick={lightThemeHandler}>Light Mode</DropdownMenuItem> :
+                            <DropdownMenuItem className="" onClick={darkThemeHandler}>Dark Mode</DropdownMenuItem>
+                    }
+                </DropdownMenuContent>
+            </DropdownMenu>
+            <div className="hidden md:block">
                 <ul className="flex pr-10 items-center">
                     <Link className="pr-5 cursor-pointer hover:underline" href={"/dashboard"}>Dashboard</Link>
                     <li className="pr-5 hover:underline cursor-pointer" onClick={logoutHandler}>Logout</li>

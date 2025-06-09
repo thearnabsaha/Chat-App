@@ -84,14 +84,14 @@ const CreateRoom = () => {
 
     }
     return (
-        <div className="rounded-lg bg-accent flex justify-center items-center lg:h-full md:h-[600px] mt-2.5 p-5">
+        <div className="rounded-lg bg-accent flex justify-center items-center lg:h-full md:h-[600px] mt-2.5 p-5 lg:p-0">
             <Toaster
                 position="top-right"
                 reverseOrder={false}
             />
-            {user ? <div className="rounded-xl flex flex-col md:w-[600px] sm:p-16 p-10 bg-card w-full">
-                <h1 className="text-3xl font-bold pb-1">Real Time Chat</h1>
-                <p className=" font-bold text-ring pb-5">Make a Room by just clicking a Button</p>
+            {user ? <div className="rounded-xl flex flex-col md:w-[600px] sm:p-16 lg:h-[400px] p-6 bg-card w-full">
+                <h1 className="text-3xl font-bold pb-1 text-center sm:text-start">Real Time Chat</h1>
+                <p className=" font-bold text-ring pb-5 text-center sm:text-start">Make a Room by just clicking a Button</p>
                 <Form {...RoomInputForm}>
                     <form onSubmit={RoomInputForm.handleSubmit(onSubmit)} className=" space-y-4 flex w-full flex-col md:flex-row">
                         <FormField
@@ -111,7 +111,7 @@ const CreateRoom = () => {
                 </Form>
                 <Button className="font-bold text-md py-3" onClick={createHandler}>Create a New Room</Button>
                 {open && <div className="flex flex-col items-center mt-5 bg-accent p-5 rounded-lg">
-                    <p>Share this code with your friend</p>
+                    <p className=" text-center sm:text-start">Share this code with your friend</p>
                     <div className="flex items-center justify-center">
                         <h1 className="text-3xl font-black pt-3">{RoomString}</h1>
                         <div onClick={copyHandler}>
