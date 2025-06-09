@@ -112,7 +112,7 @@ const Rooms = () => {
                                 <div className="space-x-3">
                                     <Button className="bg-chart-2 text-white hover:bg-chart-4" onClick={() => joinHandler(e.slug)}>Join</Button>
                                     <Dialog>
-                                        <DialogTrigger className="bg-destructive text-white hover:bg-destructive-foreground px-4 py-1.5 rounded-md cursor-pointer">
+                                        <DialogTrigger className="bg-destructive text-white hover:bg-destructive-foreground px-4 py-1.5 rounded-md cursor-pointer my-3">
                                             Delete
                                         </DialogTrigger>
                                         <DialogContent>

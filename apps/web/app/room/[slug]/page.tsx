@@ -33,6 +33,14 @@ const Room = () => {
 
     function onSubmit(values: z.infer<typeof inputSchema>) {
         console.log(values)
+        const token = localStorage.getItem("token")
+        const roomid = localStorage.getItem("roomId")
+        axios.post(`${BACKEND_URL}/chat`, {slug:roomid,message:values.msg}, { headers: { Authorization: token } })
+            .then((e) => {
+                console.log(e)
+            }).catch((e) => {
+                console.log(e)
+            })
         InputForm.reset()
     }
     const params=useParams()
@@ -67,6 +75,7 @@ const Room = () => {
                 console.log(e)
             })
     }, [])
+
     return (
         <div className="flex justify-center mt-10 font-mono">
             <div className="w-[60vw] h-[72vh] border border-ring rounded-md p-10">
