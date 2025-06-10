@@ -17,13 +17,12 @@ import { useUserStore } from "@/lib/store/userStore"
 import { Skeleton } from "@workspace/ui/components/skeleton"
 import axios from "axios"
 import { BACKEND_URL } from "@/lib/config"
-import useWebSocket from "@/hooks/UseWebsockets";
 import { InputSchema } from '@workspace/common/types';
-
+import { useWebSocket } from "@/hooks/UseWebsockets";
 const Room = () => {
+      const { connected, messages, joinRoom, sendMessage, leaveRoom } = useWebSocket('ws://localhost:4001');
     const router = useRouter();
     const { user } = useUserStore()
-    const { sendMessage, messages } = useWebSocket("ws://localhost:4001")
     const [roomId, setroomId] = useState<string | null>("")
     const InputForm = useForm<z.infer<typeof InputSchema>>({
         resolver: zodResolver(InputSchema),
@@ -34,13 +33,13 @@ const Room = () => {
     function onSubmit(values: z.infer<typeof InputSchema>) {
         const token = localStorage.getItem("token")
         const roomid = localStorage.getItem("roomId")
-        sendMessage(values.msg)
         axios.post(`${BACKEND_URL}/chat`, { slug: roomid, message: values.msg }, { headers: { Authorization: token } })
-            .then((e) => {
-                console.log(e)
-            }).catch((e) => {
-                console.log(e)
-            })
+        .then((e) => {
+            console.log(e)
+        }).catch((e) => {
+            console.log(e)
+        })
+        sendMessage(values.msg)
         InputForm.reset()
     }
     const params = useParams()
@@ -71,10 +70,12 @@ const Room = () => {
         axios.get(`${BACKEND_URL}/me`, { headers: { Authorization: token } })
             .then((e) => {
                 setUserId(e.data.message.id)
-            }).catch((e) => {
+                joinRoom(e.data.message.username||"",roomid||"")
+            })
+            .catch((e) => {
                 console.log(e)
             })
-    }, [])
+        }, [])
 
     return (
         <div className="flex justify-center sm:mt-10 mt-1 font-mono">
@@ -102,8 +103,18 @@ const Room = () => {
                     {
                         messages.map((e) => {
                             return (
-                                <div className="w-full flex flex-col items-end" key={e.from + "a" + e.msg + "b" + e.timestamps}>
-                                    <p className=" py-2 px-5 rounded-lg mx-5 my-1 bg-primary text-secondary max-w-96">{e.msg}</p>
+                                <div className="w-full flex flex-col items-end" key={e.payload.message + Math.random()+ e.payload.from+"b"+e.payload.timestamp }>
+                                    {
+                                        e.type==="system"?
+                                        // <p className="px-5 rounded-lg mx-5 my-1 max-w-96 border self-center">{e.payload.message}</p>
+                                        null
+                                        : e.payload.from===user?.username?
+                                        <p className=" py-2 px-5 rounded-lg mx-5 my-1 bg-primary text-secondary max-w-96">{e.payload.message}</p>
+                                        :<p className="py-2 px-5 rounded-lg mx-5 my-1 bg-accent self-start max-w-96">{e.payload.message}</p>
+                                    }
+                                    {/* {
+                                        e.payload==""?<p className=" py-2 px-5 rounded-lg mx-5 my-1 bg-primary text-secondary max-w-96">{e.payload.message}</p>:
+                                    } */}
                                 </div>
                             )
                         })
