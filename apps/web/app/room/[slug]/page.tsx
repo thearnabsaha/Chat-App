@@ -20,7 +20,7 @@ import { BACKEND_URL } from "@/lib/config"
 import { InputSchema } from '@workspace/common/types';
 import { useWebSocket } from "@/hooks/UseWebsockets";
 const Room = () => {
-      const { connected, messages, joinRoom, sendMessage, leaveRoom } = useWebSocket('ws://localhost:4001');
+      const { messages, joinRoom, sendMessage } = useWebSocket('ws://localhost:4001');
     const router = useRouter();
     const { user } = useUserStore()
     const [roomId, setroomId] = useState<string | null>("")
@@ -106,15 +106,11 @@ const Room = () => {
                                 <div className="w-full flex flex-col items-end" key={e.payload.message + Math.random()+ e.payload.from+"b"+e.payload.timestamp }>
                                     {
                                         e.type==="system"?
-                                        // <p className="px-5 rounded-lg mx-5 my-1 max-w-96 border self-center">{e.payload.message}</p>
                                         null
                                         : e.payload.from===user?.username?
                                         <p className=" py-2 px-5 rounded-lg mx-5 my-1 bg-primary text-secondary max-w-96">{e.payload.message}</p>
                                         :<p className="py-2 px-5 rounded-lg mx-5 my-1 bg-accent self-start max-w-96">{e.payload.message}</p>
                                     }
-                                    {/* {
-                                        e.payload==""?<p className=" py-2 px-5 rounded-lg mx-5 my-1 bg-primary text-secondary max-w-96">{e.payload.message}</p>:
-                                    } */}
                                 </div>
                             )
                         })
