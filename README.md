@@ -66,3 +66,128 @@
 ---
 
 *All protected routes require a valid JWT token in the Authorization header.*
+
+Chat App/
+├── Dockerfile.prod
+├── package.json
+├── pnpm-lock.yaml
+├── pnpm-workspace.yaml
+├── README.md
+├── tsconfig.json
+├── turbo.json
+├── apps/
+│   ├── express-server/
+│   │   ├── package.json
+│   │   ├── tsconfig.json
+│   │   ├── tsconfig.tsbuildinfo
+│   │   └── src/
+│   │       ├── index.ts
+│   │       ├── controllers/
+│   │       │   ├── chat.controller.ts
+│   │       │   ├── room.controller.ts
+│   │       │   └── user.controller.ts
+│   │       ├── middlewares/
+│   │       │   └── jwtAuth.ts
+│   │       ├── routes/
+│   │       │   ├── chat.routes.ts
+│   │       │   ├── room.routes.ts
+│   │       │   └── user.routes.ts
+│   │       └── utils/
+│   │           └── config.ts
+│   ├── web/
+│   │   ├── components.json
+│   │   ├── eslint.config.js
+│   │   ├── next-env.d.ts
+│   │   ├── next.config.mjs
+│   │   ├── package.json
+│   │   ├── postcss.config.mjs
+│   │   ├── tailwind.config.js
+│   │   ├── tsconfig.json
+│   │   ├── app/
+│   │   │   ├── favicon.ico
+│   │   │   ├── layout.tsx
+│   │   │   ├── page.tsx
+│   │   │   ├── (auth)/
+│   │   │   │   ├── layout.tsx
+│   │   │   │   ├── signin/
+│   │   │   │   │   └── page.tsx
+│   │   │   │   └── signup/
+│   │   │   ├── dashboard/
+│   │   │   │   └── page.tsx
+│   │   │   └── room/
+│   │   │       └── [slug]/
+│   │   ├── components/
+│   │   │   ├── CreateRoom.tsx
+│   │   │   ├── Navbar.tsx
+│   │   │   ├── Profile.tsx
+│   │   │   ├── providers.tsx
+│   │   │   └── Rooms.tsx
+│   │   ├── hooks/
+│   │   │   └── UseWebsockets.ts
+│   │   ├── lib/
+│   │   │   ├── config.ts
+│   │   │   └── store/
+│   │   │       ├── roomStore.ts
+│   │   │       └── userStore.ts
+│   │   └── public/
+│   │       └── a.jpg
+│   └── websockets-server/
+│       ├── package.json
+│       ├── tsconfig.json
+│       ├── tsconfig.tsbuildinfo
+│       └── src/
+│           └── index.ts
+├── packages/
+│   ├── backend-common/
+│   │   ├── package.json
+│   │   ├── tsconfig.json
+│   │   └── src/
+│   │       └── index.ts
+│   ├── common/
+│   │   ├── package.json
+│   │   ├── tsconfig.json
+│   │   └── src/
+│   │       └── types.ts
+│   ├── db/
+│   │   ├── package.json
+│   │   ├── tsconfig.json
+│   │   ├── prisma/
+│   │   │   ├── schema.prisma
+│   │   │   └── migrations/
+│   │   │       ├── migration_lock.toml
+│   │   │       ├── 20250528053040_init/
+│   │   │       ├── 20250603055017_added/
+│   │   │       └── 20250604023419_added/
+│   │   └── src/
+│   │       └── index.ts
+│   ├── eslint-config/
+│   │   ├── base.js
+│   │   ├── next.js
+│   │   ├── package.json
+│   │   ├── react-internal.js
+│   │   └── README.md
+│   ├── typescript-config/
+│   │   ├── base.json
+│   │   ├── nextjs.json
+│   │   ├── package.json
+│   │   ├── react-library.json
+│   │   └── README.md
+│   └── ui/
+│       ├── components.json
+│       ├── eslint.config.js
+│       ├── package.json
+│       ├── postcss.config.mjs
+│       ├── tsconfig.json
+│       ├── tsconfig.lint.json
+│       └── src/
+│           ├── components/
+│           │   ├── avatar.tsx
+│           │   ├── button.tsx
+│           │   ├── dialog.tsx
+│           │   ├── dropdown-menu.tsx
+│           │   ├── form.tsx
+│           │   ├── input.tsx
+│           │   ├── label.tsx
+│           │   ├── resizable.tsx
+│           │   └── skeleton.tsx
+│

@@ -20,7 +20,7 @@ import { BACKEND_URL } from "@/lib/config"
 import { InputSchema } from '@workspace/common/types';
 import { useWebSocket } from "@/hooks/UseWebsockets";
 const Room = () => {
-      const { messages, joinRoom, sendMessage } = useWebSocket('ws://localhost:4001');
+    const { messages, joinRoom, sendMessage } = useWebSocket('ws://localhost:4001');
     const router = useRouter();
     const { user } = useUserStore()
     const [roomId, setroomId] = useState<string | null>("")
@@ -86,7 +86,7 @@ const Room = () => {
                 </div>
                 <div className="bg-accent flex justify-between px-10 py-5 rounded-md text-ring">
                     {roomId ? <h1>ROOM CODE: {roomId}</h1> : <Skeleton className="w-40 h-5 bg-ring" />}
-                    <p>Users: 10/12</p>
+                    {/* <p>Users: 10/12</p> */}
                 </div>
                 <div className="border border-ring my-5 h-[40vh] rounded-md flex flex-col items-end overflow-auto py-5">
                     {
